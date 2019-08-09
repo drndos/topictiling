@@ -3,8 +3,8 @@
  *	riedl@cs.tu-darmstadt.de
  *  FG Language Technology
  * 	Technische Universität Darmstadt, Germany
- * 
- * 
+ *
+ *
  *  This file is part of TopicTiling.
  *
  *  TopicTiling is free software: you can redistribute it and/or modify
@@ -23,8 +23,8 @@
 
 package de.tudarmstadt.langtech.lda.annotator;
 
-import static org.uimafit.util.JCasUtil.select;
-import static org.uimafit.util.JCasUtil.selectCovered;
+import static org.apache.uima.fit.util.JCasUtil.select;
+import static org.apache.uima.fit.util.JCasUtil.selectCovered;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -51,9 +51,9 @@ public class GibbsLdaDocumentBasedTopicIdAnnotator
 				arr[0].add(t.getCoveredText());
 			}
 		}
-		
+
 		return arr;
 	}
-	
+
 
 }

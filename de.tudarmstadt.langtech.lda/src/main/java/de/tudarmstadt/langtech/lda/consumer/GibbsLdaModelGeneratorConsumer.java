@@ -3,8 +3,8 @@
  *	riedl@cs.tu-darmstadt.de
  *  FG Language Technology
  * 	Technische Universität Darmstadt, Germany
- * 
- * 
+ *
+ *
  *  This file is part of TopicTiling.
  *
  *  TopicTiling is free software: you can redistribute it and/or modify
@@ -27,8 +27,8 @@ import jgibbslda.Estimator;
 import jgibbslda.LDACmdOption;
 
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.fit.component.JCasConsumer_ImplBase;
 import org.apache.uima.jcas.JCas;
-import org.uimafit.component.JCasConsumer_ImplBase;
 
 public class GibbsLdaModelGeneratorConsumer extends JCasConsumer_ImplBase {
 
@@ -38,7 +38,7 @@ public class GibbsLdaModelGeneratorConsumer extends JCasConsumer_ImplBase {
 		LDACmdOption options = new LDACmdOption();
 		Estimator es = new Estimator();
 		es.init(options);
-		
+
 	}
-	
+
 }

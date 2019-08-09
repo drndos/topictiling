@@ -3,8 +3,8 @@
  *	riedl@cs.tu-darmstadt.de
  *  FG Language Technology
  * 	Technische Universität Darmstadt, Germany
- * 
- * 
+ *
+ *
  *  This file is part of TopicTiling.
  *
  *  TopicTiling is free software: you can redistribute it and/or modify
@@ -23,7 +23,8 @@
 
 package de.tudarmstadt.langtech.lda.annotator;
 
-import static org.uimafit.util.JCasUtil.select;
+
+import static org.apache.uima.fit.util.JCasUtil.select;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,11 +35,11 @@ import jgibbslda.Model;
 
 import org.apache.uima.UIMAFramework;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.DoubleArray;
 import org.apache.uima.util.Level;
 import org.apache.uima.util.Logger;
-import org.uimafit.descriptor.ConfigurationParameter;
 
 import de.tudarmstadt.langtech.lda.type.Topic;
 import de.tudarmstadt.langtech.lda.type.TopicDistribution;
@@ -62,13 +63,13 @@ public abstract class GibbsLdaTopicIdAnnotator extends
 
 	@ConfigurationParameter(name = PARAM_ANNOTATE_WORD_TOPIC_DISTRIBUTION, mandatory = false, defaultValue = "false")
 	private boolean ldaAnnotateWordTopicDistribution = false;
-	
+
 	/**
 	 * Function iterates over all tokens and assigns a topic ID. This can only
 	 * be performed, when the token is within the model.
-	 * 
+	 *
 	 * @param jcas
-	 * @param z
+	 * @param
 	 */
 
 	private void annotateTokenWithTopicId(JCas jcas, List<Integer>[] modelZ,
@@ -161,7 +162,7 @@ public abstract class GibbsLdaTopicIdAnnotator extends
 	}
 
 	private void annotateWordsWithTopicDistribution(JCas jcas, Model m) {
-		
+
 		HashMap<String,DoubleArray> map = new HashMap<String, DoubleArray>();
 		for(int wi =0;wi< m.phi.length;wi++){
 			double[] topics=m.phi[wi];
@@ -173,14 +174,14 @@ public abstract class GibbsLdaTopicIdAnnotator extends
 			map.put(word, arr);
 		}
 		for (Token t : select(jcas, Token.class)) {
-		
+
 			DoubleArray arr = map.get(t.getCoveredText());
 			if(arr!=null){
 				WordTopicDistribution wtd = new WordTopicDistribution(jcas,t.getBegin(),t.getEnd());
 				wtd.setTopicDistribution(arr);
 				wtd.addToIndexes();
 			}
-			
+
 		}
 	}
 

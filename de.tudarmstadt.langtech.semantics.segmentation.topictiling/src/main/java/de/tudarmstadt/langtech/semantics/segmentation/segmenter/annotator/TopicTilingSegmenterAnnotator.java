@@ -3,8 +3,8 @@
  *	riedl@cs.tu-darmstadt.de
  *  FG Language Technology
  * 	Technische Universität Darmstadt, Germany
- * 
- * 
+ *
+ *
  *  This file is part of TopicTiling.
  *
  *  TopicTiling is free software: you can redistribute it and/or modify
@@ -34,11 +34,11 @@ import java.util.List;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.cas.impl.ListUtils;
+import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
+import org.apache.uima.fit.descriptor.ConfigurationParameter;
+import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
-import org.uimafit.component.JCasAnnotator_ImplBase;
-import org.uimafit.descriptor.ConfigurationParameter;
-import org.uimafit.util.JCasUtil;
 
 import de.tudarmstadt.langtech.semantics.segmentation.segmenter.TextTilingWindowOptimized;
 import de.tudarmstadt.langtech.semantics.segmentation.segmenter.TopicTiling;
@@ -128,7 +128,7 @@ public class TopicTilingSegmenterAnnotator extends JCasAnnotator_ImplBase {
 					.iterator().next().getSegmentCount();
 			segmentPositions = tt.segment(s, segNum);
 		}
-		
+
 		int j = 0;
 		for (List<Token> ss: s){
 			String l = "";
@@ -225,8 +225,8 @@ public class TopicTilingSegmenterAnnotator extends JCasAnnotator_ImplBase {
 	private void annotateSegments(JCas jcas, List<Integer> segmentPositions,
 			List<Double> depthScores, List<Integer> minimaPosition,List<Double> similarityScores) {
 		List<Sentence> sentences = new ArrayList<Sentence>(JCasUtil.select(jcas, Sentence.class));
-		
-		//add first segment which has no score 
+
+		//add first segment which has no score
 		int endIdx;
 		if (segmentPositions.get(segmentPositions.size()-1)!=(sentences.size()-1)){
 			segmentPositions.add(sentences.size()-1);
@@ -249,14 +249,14 @@ public class TopicTilingSegmenterAnnotator extends JCasAnnotator_ImplBase {
 			String similarities = getSimilarityScores(similarityScores, segStart, segEnd);
 			addSegment(sentences.get(segStart).getBegin(), sentences.get(segEnd).getEnd(), depthScores.get(i),similarities, jcas);
 		}
-		
+
 	}
 	private void addSegment(int startIdx, int endIdx, double score, String similarities,JCas jcas) {
 		SegmentScore seg = new SegmentScore(jcas,startIdx,endIdx);
 		seg.setScore(score);
 		seg.setSimilarityScores(similarities);
 		seg.addToIndexes();
-		
+
 	}
 
 	private void cannotateSegments(JCas jcas, List<Integer> segmentPositions,
@@ -307,7 +307,7 @@ public class TopicTilingSegmenterAnnotator extends JCasAnnotator_ImplBase {
 
 	/**
 	 * expects a list with the sentencenumber that will be segmented
-	 * 
+	 *
 	 * @param jcas
 	 * @param sentenceBreaks
 	 */

@@ -1,17 +1,17 @@
 package de.tudarmstadt.langtech.lda;
 
-import static org.uimafit.factory.AnalysisEngineFactory.createPrimitive;
+import static org.apache.uima.fit.factory.AnalysisEngineFactory.createPrimitive;
 
 import java.io.IOException;
 import java.text.BreakIterator;
 
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngine;
+import org.apache.uima.fit.component.CasDumpWriter;
+import org.apache.uima.fit.factory.AnalysisEngineFactory;
+import org.apache.uima.fit.factory.JCasFactory;
+import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.jcas.JCas;
-import org.uimafit.component.xwriter.CASDumpWriter;
-import org.uimafit.factory.AnalysisEngineFactory;
-import org.uimafit.factory.JCasFactory;
-import org.uimafit.pipeline.SimplePipeline;
 
 import de.tudarmstadt.langtech.lda.annotator.GibbsLdaDocumentBasedTopicIdAnnotator;
 import de.tudarmstadt.langtech.lda.annotator.GibbsLdaSentenceBasedTopicIdAnnotator;
@@ -25,7 +25,7 @@ public class TestLdaTopicModelAnnotator {
 		JCas jcas = getJCas();
 
 		//sentence wise
-		AnalysisEngine ae = AnalysisEngineFactory.createPrimitive(GibbsLdaSentenceBasedTopicIdAnnotator.class, 
+		AnalysisEngine ae = createPrimitive(GibbsLdaSentenceBasedTopicIdAnnotator.class,
 				GibbsLdaTopicIdAnnotator.PARAM_LDA_MODEL_NAME, "model-final",
 				GibbsLdaTopicIdAnnotator.PARAM_LDA_MODEL_DIR, "src/test/resources/model",
 				GibbsLdaTopicIdAnnotator.PARAM_ANNOTATE_DOCUMENT_TOPIC_DISTRIBUTION,true,
@@ -34,7 +34,7 @@ public class TestLdaTopicModelAnnotator {
 				);
 
 		//document wise
-		AnalysisEngine ae2 = AnalysisEngineFactory.createPrimitive(GibbsLdaDocumentBasedTopicIdAnnotator.class, 
+		AnalysisEngine ae2 = createPrimitive(GibbsLdaDocumentBasedTopicIdAnnotator.class,
 				GibbsLdaTopicIdAnnotator.PARAM_LDA_MODEL_NAME, "model-final",
 				GibbsLdaTopicIdAnnotator.PARAM_LDA_MODEL_DIR, "src/test/resources/model",
 				GibbsLdaTopicIdAnnotator.PARAM_ANNOTATE_DOCUMENT_TOPIC_DISTRIBUTION,true,
@@ -42,8 +42,8 @@ public class TestLdaTopicModelAnnotator {
 				GibbsLdaTopicIdAnnotator.PARAM_LDA_REPEAT_INFERENCE, 100
 				);
 
-		
-		AnalysisEngine out = createPrimitive(CASDumpWriter.class);
+
+		AnalysisEngine out = createPrimitive(CasDumpWriter.class);
 		SimplePipeline.runPipeline(jcas, ae,out);
 	}
 
@@ -56,7 +56,7 @@ public class TestLdaTopicModelAnnotator {
 		metaData.setDocumentTitle("Titel");
 		metaData.addToIndexes();
 		BreakIterator boundary = BreakIterator.getWordInstance();
-		
+
 
 		// print each sentence in reverse order
 		boundary.setText(text);
@@ -67,7 +67,7 @@ public class TestLdaTopicModelAnnotator {
 		}
 		boundary = BreakIterator.getSentenceInstance();
 		boundary.setText(text);
-		
+
 		start = boundary.first();
 		for (int end = boundary.next(); end != BreakIterator.DONE; start = end, end = boundary.next()) {
 			Sentence t = new Sentence(jcas, start, end);

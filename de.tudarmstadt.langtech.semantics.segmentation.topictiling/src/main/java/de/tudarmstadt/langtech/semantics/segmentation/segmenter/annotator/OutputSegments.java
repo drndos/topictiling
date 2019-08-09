@@ -3,8 +3,8 @@
  *	riedl@cs.tu-darmstadt.de
  *  FG Language Technology
  * 	Technische Universität Darmstadt, Germany
- * 
- * 
+ *
+ *
  *  This file is part of TopicTiling.
  *
  *  TopicTiling is free software: you can redistribute it and/or modify
@@ -20,21 +20,21 @@
  *  You should have received a copy of the GNU General Public License
  *  along with TopicTiling.  If not, see <http://www.gnu.org/licenses/>.
  */
-		
+
 package de.tudarmstadt.langtech.semantics.segmentation.segmenter.annotator;
 
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.Collection;
 
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
+import org.apache.uima.fit.descriptor.ConfigurationParameter;
+import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
-import org.uimafit.component.JCasAnnotator_ImplBase;
-import org.uimafit.descriptor.ConfigurationParameter;
-import org.uimafit.util.JCasUtil;
 
 import de.tudarmstadt.langtech.semantics.type.SegmentScore;
 import de.tudarmstadt.ukp.dkpro.core.api.metadata.type.DocumentMetaData;

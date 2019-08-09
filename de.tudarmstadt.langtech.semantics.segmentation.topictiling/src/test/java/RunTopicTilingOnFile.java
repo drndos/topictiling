@@ -5,13 +5,13 @@ import java.io.IOException;
 import org.apache.uima.UIMAException;
 import org.apache.uima.analysis_engine.AnalysisEngine;
 import org.apache.uima.collection.CollectionReader;
+import org.apache.uima.fit.factory.AnalysisEngineFactory;
+import org.apache.uima.fit.factory.CollectionReaderFactory;
+import org.apache.uima.fit.pipeline.SimplePipeline;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
-import org.uimafit.factory.AnalysisEngineFactory;
-import org.uimafit.factory.CollectionReaderFactory;
-import org.uimafit.pipeline.SimplePipeline;
 
 import de.tudarmstadt.langtech.semantics.segmentation.segmenter.annotator.OutputSegments;
 import de.tudarmstadt.langtech.semantics.segmentation.segmenter.annotator.TopicTilingSegmenterAnnotator;
@@ -19,7 +19,7 @@ import de.tudarmstadt.ukp.dkpro.core.io.text.TextReader;
 import de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordSegmenter;
 
 public class RunTopicTilingOnFile {
-	
+
 	private static class Options {
 		@Option(name="-tmd",usage="Directory of the topic model (GibbsLDA should be used)",required = true)
 		String topicModelDirectory;
@@ -76,7 +76,7 @@ public class RunTopicTilingOnFile {
 
 				TextReader.PARAM_PATTERNS, new String[] { "[+]"+opt.filePattern }
 				);
-		
+
 		AnalysisEngine segmenter = AnalysisEngineFactory.createPrimitive(StanfordSegmenter.class);
 		AnalysisEngine topicTiling = AnalysisEngineFactory
 					.createPrimitive(

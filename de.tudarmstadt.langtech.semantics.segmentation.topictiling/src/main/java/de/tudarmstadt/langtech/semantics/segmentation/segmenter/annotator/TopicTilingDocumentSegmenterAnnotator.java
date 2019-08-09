@@ -3,8 +3,8 @@
  *	riedl@cs.tu-darmstadt.de
  *  FG Language Technology
  * 	Technische Universität Darmstadt, Germany
- * 
- * 
+ *
+ *
  *  This file is part of TopicTiling.
  *
  *  TopicTiling is free software: you can redistribute it and/or modify
@@ -30,11 +30,11 @@ import java.util.List;
 
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
+import org.apache.uima.fit.component.JCasAnnotator_ImplBase;
+import org.apache.uima.fit.descriptor.ConfigurationParameter;
+import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
-import org.uimafit.component.JCasAnnotator_ImplBase;
-import org.uimafit.descriptor.ConfigurationParameter;
-import org.uimafit.util.JCasUtil;
 
 import de.tudarmstadt.langtech.semantics.segmentation.segmenter.TextTilingWindowOptimized;
 import de.tudarmstadt.langtech.semantics.segmentation.segmenter.TopicTilingTopicDocument;
@@ -54,7 +54,7 @@ public class TopicTilingDocumentSegmenterAnnotator
 	public static final String PARAM_REPEAT_SEGMENTATION = "RepeatedSegmentation";
 	public static final String PARAM_INFERENCE_ITERATION = "InferenceIteration";
 	public static final String PARAM_REPEAT_INFERENCE = "RepeatedInference";
-	
+
 	@ConfigurationParameter(name = PARAM_LDA_MODEL_DIRECTORY, mandatory = true)
 	private String ldaModelDirectory;
 	@ConfigurationParameter(name = PARAM_LDA_MODEL_NAME, mandatory = true)
@@ -67,14 +67,14 @@ public class TopicTilingDocumentSegmenterAnnotator
 	private int repeatSegmentation;
 	@ConfigurationParameter(name = PARAM_INFERENCE_ITERATION, mandatory = true)
 	private int inferenceIteration;
-	
-	
+
+
 
 	@Override
 	public void initialize(UimaContext context)
 		throws ResourceInitializationException {
 		super.initialize(context);
-		
+
 	}
 
 	@Override
@@ -97,9 +97,9 @@ public class TopicTilingDocumentSegmenterAnnotator
 		}
 
 		TopicTilingTopicDocument tttd ;
-		
+
 		if (JCasUtil.select(jcas, SegmentQuantity.class).size() == 0) {
-			
+
 			tttd = new TopicTilingTopicDocument(ldaModelDirectory, ldaModelName, window, repeatSegmentation, repeatInferences, inferenceIteration);
 		} else {
 			int segNum = JCasUtil.select(jcas, SegmentQuantity.class)
@@ -107,7 +107,7 @@ public class TopicTilingDocumentSegmenterAnnotator
 			tttd = new TopicTilingTopicDocument(ldaModelDirectory, ldaModelName, window, repeatSegmentation, repeatInferences, inferenceIteration,segNum);
 		}
 
-		
+
 		List<Integer> segmentPositions = tttd.segment(s);
 		// print(jcas,segmentPositions);
 		// printRcode(jcas, segmentCounts, wtt2, segmentPositionsWnew);
@@ -185,10 +185,10 @@ public class TopicTilingDocumentSegmenterAnnotator
 		return buffer;
 	}
 
-	
+
 	/**
 	 * expects a list with the sentencenumber that will be segmented
-	 * 
+	 *
 	 * @param jcas
 	 * @param sentenceBreaks
 	 */

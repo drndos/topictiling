@@ -3,8 +3,8 @@
  *	riedl@cs.tu-darmstadt.de
  *  FG Language Technology
  * 	Technische Universität Darmstadt, Germany
- * 
- * 
+ *
+ *
  *  This file is part of TopicTiling.
  *
  *  TopicTiling is free software: you can redistribute it and/or modify
@@ -37,16 +37,15 @@ import jgibbslda.Inferencer;
 import jgibbslda.LDACmdOption;
 import jgibbslda.Model;
 
-import org.uimafit.util.JCasUtil;
-
 import de.tudarmstadt.langtech.lda.type.Topic;
 import de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token;
+import org.apache.uima.fit.util.JCasUtil;
 
 public class TopicTiling {
 	public enum DepthScore {
 		DIRECT_NEIGHBOR, HIGHEST_NEIGHBOR
 	}
-	
+
 	private boolean debug = false;
 
 	public boolean useAssignedTopics = false;
@@ -77,7 +76,7 @@ public class TopicTiling {
 		useAssignedTopics = topicsAssigned;
 
 		sw = new ArrayList<String>();
-		
+
 		this.depthScore = DepthScore.valueOf(depthScore);
 		this.ldaModelDirectory = ldaModelDirectory;
 		this.ldaModelName = ldaModelName;
@@ -95,7 +94,7 @@ public class TopicTiling {
 			inf.init(opt);
 			inf.niters = inferenceIterations;
 		}
-		
+
 	}
 
 	public TopicTiling(String ldaModelDirectory, String ldaModelName,
@@ -114,7 +113,7 @@ public class TopicTiling {
 	public List<Integer> segment(List<List<Token>> sentences, int segmentNumber) {
 		this.segmentNumber = segmentNumber;
 		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
-	
+
 		for (int i = 0; i < repeatSegmentation; i++) {
 
 			List<Integer> segments = segment2(sentences);
@@ -148,7 +147,7 @@ public class TopicTiling {
 	private List<Integer> segment2(List<List<Token>> sentences) {
 
 		similarityScores = getSimilarityScores(sentences);
-		
+
 		if(debug)System.out.println(similarityScores);
 		minimaPosition = getMinima();
 		if(debug)System.out.println(minimaPosition);
@@ -168,7 +167,7 @@ public class TopicTiling {
 			System.err.println("segment size:" + segments.size());
 			System.err.println("similarites: " + similarityScores);
 		}
-	
+
 		return segments;
 	}
 
@@ -187,14 +186,14 @@ public class TopicTiling {
 				}
 			}
 		}
-	
+
 		return segments;
 	}
 
 	private void printTopicWordAnnotation(List<Integer>[] newZ,
 			List<Integer>[] otherZ, String[] partsArray, Model m) {
 
-		
+
 		int i = 0;
 		for (String s : partsArray) {
 			int j = 0;
@@ -348,7 +347,7 @@ public class TopicTiling {
 			for (i = 0; i < newZ.length - window; i++) {
 				similarities.add(calculateSimilarity(100, i, newZ, null));
 			}
-			
+
 
 		}
 		else {
@@ -372,14 +371,14 @@ public class TopicTiling {
 						inferenceIterations, 1);
 			if (repeatInference == 1) {
 //				System.out.println(modelZ.length);
-				
+
 				for (i=0;i<sentences.size();i++){
 //					System.out.println(sentences.get(i).size());
 //					System.out.println(modelZ[i].size());
 					int j2 = 0;
 					for (int j =0; j<sentences.get(i).size();j++){
 						String w = sentences.get(i).get(j).getCoveredText();
-						
+
 						if (inf.globalDict.word2id.containsKey(w)){
 								j2+=1;
 								if (modelZ[i].size()<j2+1){
@@ -389,7 +388,7 @@ public class TopicTiling {
 								}
 						}else{
 							if(debug)System.out.print(w+":-1 ");
-								
+
 						}
 					}
 					if(debug)System.out.println();
@@ -400,7 +399,7 @@ public class TopicTiling {
 							partsArray));
 
 				}
-		
+
 			} else {
 				// initialize save structure for word wise topic stabilization
 				ArrayList<int[][]> values = new ArrayList<int[][]>();
@@ -428,14 +427,14 @@ public class TopicTiling {
 					similarities.add(calculateSimilarity(m.K, i, newZ,
 							partsArray));
 				}
-				
+
 			}
 		}
 
 		return similarities;
 	}
 
-	
+
 	private List<Integer>[] getTopicListFromRepeated(ArrayList<int[][]> values,
 			String[] partsArray, int max, int min) {
 		@SuppressWarnings("unchecked")
@@ -469,7 +468,7 @@ public class TopicTiling {
 		double[] v1 = getVector(topicNumber, z[i]);
 		double[] v2 = getVector(topicNumber, z[i + window]);
 		String arrV = Arrays.toString(v1);
-		
+
 		double sim = calculateDotProduct(v1, v2);
 		if (Double.isNaN(sim)) {
 			return 1.0;
